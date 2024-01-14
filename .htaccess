@@ -1,0 +1,10 @@
+Options -Indexes
+ErrorDocument 404 /404page.php
+ErrorDocument 400 /404page.php
+ErrorDocument 403 /404page.php
+
+ErrorDocument 405 /404page.php
+ErrorDocument 408 /404page.php
+ErrorDocument 500 /404page.php
+ErrorDocument 502 /404page.php
+ErrorDocument 504 /404page.php

@@ -1,0 +1,17 @@
+
+Database
+Host        :   
+Username    :   
+Password    :   
+Name        :   
+
+Email
+Host        :   
+Username    :   
+Password    :   
+
+
+FTP
+Host        :   
+Username    :   
+Password    :  
