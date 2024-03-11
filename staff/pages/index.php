@@ -11,9 +11,9 @@ if (isset($_POST['data'])) {
   $result = mysqli_query($connection, "SET NAMES utf8mb4");
   $date = date('Y-m-d');
 
-  $result = mysqli_query($connection, "SELECT s.name as staffname, a.date, min(a.time) as InTime, max(a.time) as OutTime
+  $result = mysqli_query($connection, "SELECT s.name as staffname, IFNULL(a.date,'$date'), IFNULL(min(a.time),'-') as InTime, IFNULL(max(a.time),'-') as OutTime
                                         FROM attendance as a INNER JOIN staff as s ON a.staffid = s.id WHERE s.id = '$userid' AND a.date = '$date'
-                                        GROUP BY staffid, date");
+                                        ");
   $data->list = mysqli_fetch_all($result, MYSQLI_ASSOC); 
 
   echo json_encode($data);
@@ -169,8 +169,13 @@ if (isset($_POST['data'])) {
 
             var returnedData = JSON.parse(response);
             console.log(returnedData);
-            $('#intime').text(returnedData['list'][0]['InTime'].substr(10));
-            $('#outtime').text(returnedData['list'][0]['OutTime'].substr(10));
+            if(returnedData['list'][0]['InTime']=='-'){
+              $('#intime').text(returnedData['list'][0]['InTime']);
+              $('#outtime').text(returnedData['list'][0]['OutTime']);
+            }else{
+              $('#intime').text(returnedData['list'][0]['InTime'].substr(10));
+              $('#outtime').text(returnedData['list'][0]['OutTime'].substr(10));
+            }           
 
           }
         });

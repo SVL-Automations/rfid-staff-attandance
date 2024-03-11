@@ -20,7 +20,7 @@ if (isset($_POST['data'])) {
   $result = mysqli_query($connection, "SELECT count(*) as count from staff where status='1'");
   $data->faculties = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-  $result = mysqli_query($connection, "SELECT count(DISTINCT staffid) as count from attendance WHERE date = '$date' GROUP BY staffid");
+  $result = mysqli_query($connection, "SELECT IFNULL((SELECT count(DISTINCT staffid) as count from attendance WHERE date = '$date' GROUP BY staffid),0) as count");
   $data->today = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
   echo json_encode($data);
@@ -137,7 +137,7 @@ if (isset($_POST['data'])) {
                 <div class="icon">
                   <i class="fa fa-group"></i>
                 </div>
-                <a href="rptstaff.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="rptfaculty.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -152,7 +152,7 @@ if (isset($_POST['data'])) {
                 <div class="icon">
                   <i class="fa fa-user-times"></i>
                 </div>
-                <a href="rptattandance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="rptattendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -207,7 +207,7 @@ if (isset($_POST['data'])) {
           success: function(response) {
 
             var returnedData = JSON.parse(response);
-            console.log(returnedData);
+            console.log(returnedData);            
             $('#admin').text(returnedData['admin'][0]['count']);
             $('#department').text(returnedData['department'][0]['count']);
             $('#faculties').text(returnedData['faculties'][0]['count']);
